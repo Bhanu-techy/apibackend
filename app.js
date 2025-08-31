@@ -1,6 +1,9 @@
 const express = require('express')
 const path = require('path')
+const cors = require('cors')
+
 const app = express()
+app.use(cors())
 const {open} = require('sqlite')
 const sqlite3 = require('sqlite3')
 
@@ -126,47 +129,6 @@ app.put('/districts/:districtId/', async (request, response) => {
 
   await db.run(updateDistrictQuery)
   response.send('District Details Updated')
-})
-
-// get state API
-app.get('/states/:stateId/stats/', async (request, response) => {
-  const {stateId} = request.params
-  const getstateIdQuery = `
-SELECT
- SUM(cases),
- SUM(cured),
- SUM(active),
- SUM(deaths)
-FROM
-  district
-WHERE
-  state_id = ${stateId};`
-
-  const stats = await db.get(getstateIdQuery)
-  response.send({
-    totalCases: stats['SUM(cases)'],
-    totalCured: stats['SUM(cured)'],
-    totalActive: stats['SUM(active)'],
-    totalDeaths: stats['SUM(deaths)'],
-  })
-})
-
-//Get district details
-app.get('/districts/:districtId/details/', async (request, response) => {
-  const {districtId} = request.params
-  const getDistrictIdQuery = `
-  select state_id 
-    from district
-  where 
-    district_id = ${districtId};`
-  const getDistrictIdQueryResponse = await db.get(getDistrictIdQuery)
-  const getStateNameQuery = `
-  select 
-    state_name as stateName 
-  from state
-    where state_id = ${getDistrictIdQueryResponse.state_id};`
-  const getStateNameQueryResponse = await db.get(getStateNameQuery)
-  response.send(getStateNameQueryResponse)
 })
 
 module.exports = app

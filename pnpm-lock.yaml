@@ -1,4 +1,5 @@
 dependencies:
+  cors: 2.0.0
   express: 4.17.1
   nodemon: 2.0.7
   sqlite: 4.0.19
@@ -352,6 +353,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==
+  /cors/2.0.0:
+    dev: false
+    engines:
+      node: '>=0.8.0'
+    resolution:
+      integrity: sha512-8CpE/Dw+A4pZuOb3awDKnrmyj8ZBVYVd2Y111YIxGG0bbPBkNtRlvDRvjt5CmnqRVJ1N/bj6/ZZtXU3RBN2Rpg==
   /crypto-random-string/2.0.0:
     dev: false
     engines:
@@ -1921,6 +1928,7 @@ packages:
     resolution:
       integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==
 specifiers:
+  cors: 2.0.0
   express: 4.17.1
   nodemon: 2.0.7
   sqlite: 4.0.19
