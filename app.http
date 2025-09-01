@@ -1,6 +1,47 @@
 GET http://localhost:3000/api/customers/
 
+GET http://localhost:3000/api/customers/12/
 
-GET http://localhost:3000/ping
+POST http://localhost:3000/api/customers/
+Content-Type : application/json
 
+{
+    "first_name": "Sai",
+    "last_name": "Kumar",
+    "phone_number": "33221423"
+}
 
+PUT http://localhost:3000/api/customers/13/
+Content-Type : application/json
+
+{
+    "first_name" : "Bhanu",
+    "last_name" : "Prakash",
+    "phone_number" : "63025897"
+}
+
+DELETE http://localhost:3000/api/customers/16/
+
+GET http://localhost:3000/api/addresses/
+
+GET http://localhost:3000/api/customers/14/addresses
+
+POST http://localhost:3000/api/customers/14/addresses
+Content-Type : application/json
+{
+        "address_details": "H.NO 1-342 Ponnor",
+        "city": "Guntur",
+        "state": "Andhra Pradesh",
+        "pin_code": "550044"
+}
+
+PUT http://localhost:3000/api/addresses/3/
+Content-Type : application/json
+{
+        "address_details": "H.NO 1-134/a, KPHB colony",
+        "city": "Hyderabad",
+        "state": "Telangana",
+        "pin_code": "500072"
+}
+
+DELETE http://localhost:3000/api/addresses/6
