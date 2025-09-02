@@ -1,5 +1,7 @@
 GET http://localhost:3000/api/customers/
 
+GET http://localhost:3000/api/customers/?city=Hyderbad&page=2
+
 GET http://localhost:3000/api/customers/12/
 
 POST http://localhost:3000/api/customers/

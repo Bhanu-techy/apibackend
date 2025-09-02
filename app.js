@@ -32,18 +32,29 @@ initializeDBAndServer()
 
 app.use(express.json())
 
-//Get all states API call
+//et all states API call with filters
 app.get('/api/customers/', async (request, response) => {
-  const getstatesQuery = `
- SELECT
-  *
- FROM
-  customers;`
-
-  const details = await db.all(getstatesQuery)
-  response.send(details)
+  const {city = '', page = 10} = request.query
+  
+  let details
+  if (city !== '') {
+    const getstatesQuery = `
+ select customers.id, customers.first_name, customers.last_name,
+  customers.phone_number
+from customers inner join addresses on
+ customers.id = addresses.customer_id
+ where addresses.city LIKE '%${city}%'
+ limit '${page}';`
+    details = await db.all(getstatesQuery)
+    response.send(details)
+  } else {
+    const query = `select * from customers;`
+    details = await db.all(query)
+    response.send(details)
+  }
 })
 
+//Get API call of a Customer
 app.get('/api/customers/:id/', async (request, response) => {
   const {id} = request.params
   const getQuery = `
@@ -57,6 +68,7 @@ app.get('/api/customers/:id/', async (request, response) => {
   response.send(details)
 })
 
+//POST API call to add customer
 app.post('/api/customers/', async (request, response) => {
   const {first_name, last_name, phone_number} = request.body
 
@@ -69,6 +81,7 @@ app.post('/api/customers/', async (request, response) => {
   response.send({id: id})
 })
 
+//DELETE API Call 
 app.delete('/api/customers/:id/', async (request, response) => {
   const {id} = request.params
   const deleteQuery = `
@@ -80,6 +93,7 @@ app.delete('/api/customers/:id/', async (request, response) => {
   response.send('Deleted Successfully')
 })
 
+//PUT API Call to edit customer details
 app.put('/api/customers/:id/', async (request, response) => {
   const {id} = request.params
   const {first_name, last_name, phone_number} = request.body
@@ -94,6 +108,7 @@ app.put('/api/customers/:id/', async (request, response) => {
   response.send('customer updated successfully')
 })
 
+
 app.get('/api/addresses/', async (request, response) => {
   const getstatesQuery = `
  SELECT
@@ -105,6 +120,7 @@ app.get('/api/addresses/', async (request, response) => {
   response.send(details)
 })
 
+//GET API Call for addresses of a particular customer
 app.get('/api/customers/:id/addresses', async (request, response) => {
   const {id} = request.params
   const getQuery = `
@@ -116,6 +132,7 @@ app.get('/api/customers/:id/addresses', async (request, response) => {
   response.send(data)
 })
 
+//POST API Call to addresses
 app.post('/api/customers/:id/addresses', async (request, response) => {
   const {id} = request.params
   const {address_details, state, city, pin_code} = request.body
@@ -128,6 +145,7 @@ app.post('/api/customers/:id/addresses', async (request, response) => {
   response.send('addresses added Successfully')
 })
 
+//PUT API Call to edit address details
 app.put('/api/addresses/:addressId/', async (request, response) => {
   const {addressId} = request.params
   const {address_details, city, state, pin_code} = request.body
