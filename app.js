@@ -35,7 +35,7 @@ app.use(express.json())
 //et all states API call with filters
 app.get('/api/customers/', async (request, response) => {
   const {city = '', page = 10} = request.query
-  
+
   let details
   if (city !== '') {
     const getstatesQuery = `
@@ -81,7 +81,7 @@ app.post('/api/customers/', async (request, response) => {
   response.send({id: id})
 })
 
-//DELETE API Call 
+//DELETE API Call
 app.delete('/api/customers/:id/', async (request, response) => {
   const {id} = request.params
   const deleteQuery = `
@@ -107,7 +107,6 @@ app.put('/api/customers/:id/', async (request, response) => {
   await db.run(updateQuery)
   response.send('customer updated successfully')
 })
-
 
 app.get('/api/addresses/', async (request, response) => {
   const getstatesQuery = `
